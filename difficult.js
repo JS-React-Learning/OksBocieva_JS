@@ -1,3 +1,5 @@
+// Difficult  task 3  start
+/*
 let lang = prompt('Выбери язык: ru или en').toLowerCase();
 
 if (lang === 'ru') {
@@ -36,3 +38,36 @@ let role =
     : 'студент';
 
 console.log(role);
+*/
+// Difficult  task 3  end
+
+// Difficult task 4
+
+const stringCheck = function (str) {
+  if (typeof str !== 'string') {
+    alert('Это не строка, введи строку');
+    return;
+  }
+
+  str = str.trim();
+
+  if (str.length === 0) {
+    alert('Строка пуста');
+    return;
+  }
+
+  if (str.length > 30) {
+    str = str.slice(0, 30) + '...';
+  }
+  return str;
+};
+
+console.log(stringCheck('   Строка с пробелами в начале и в конце    '));
+
+console.log(
+  stringCheck(
+    'Это очень длинная строка, которая точно больше тридцати символов...',
+  ),
+);
+
+console.log(stringCheck(12345));
