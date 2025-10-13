@@ -48,7 +48,7 @@ const getAllServicePrices = function () {
 
     do {
       price = prompt('Сколько это будет стоить?');
-    } while (!isNumber(price));
+    } while (price === null || price.trim() === '' || !isNumber(price));
 
     sum += Number(price);
   }
@@ -81,7 +81,7 @@ const showTypeOf = function (variable) {
 };
 
 const getServicePercentPrices = function () {
-  return Math.ceil(fullPrice - 28);
+  return Math.ceil(fullPrice - fullPrice * 0.28);
 };
 
 asking();
