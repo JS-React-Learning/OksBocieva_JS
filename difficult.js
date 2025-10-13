@@ -41,8 +41,8 @@ console.log(role);
 */
 // Difficult  task 3  end
 
-// Difficult task 4
-
+// Difficult task 4 start
+/*
 const stringCheck = function (str) {
   if (typeof str !== 'string') {
     alert('Это не строка, введи строку');
@@ -71,3 +71,25 @@ console.log(
 );
 
 console.log(stringCheck(12345));
+*/
+// Difficult task 4 end
+
+// Difficult task 5 start
+
+const primeNumbers = function () {
+  for (let n = 2; n <= 100; n++) {
+    let d;
+
+    for (d = 2; d < n; d++) {
+      if (n % d === 0) {
+        break;
+      }
+    }
+
+    if (d === n) {
+      console.log(`${n} - Делители этого числа: 1 и ${n}`);
+    }
+  }
+};
+
+primeNumbers();

@@ -1,26 +1,67 @@
-let title = prompt('Как называется ваш проект');
-let screens = prompt('Какие типы экранов нужно разработать?');
-let screenPrice = Number(prompt('Сколько будет стоить данная работа?'));
-let adaptive =
-  prompt('Нужен ли адаптив на сайте?').trim().toLowerCase() === 'да';
+let title;
+let screens;
+let screenPrice;
+let adaptive;
+let service1;
 
-let service1 = prompt('Какой дополнительный тип услуги нужен?');
-let servicePrice1 = Number(prompt('Сколько это будет стоить?'));
+let service2;
 
-let service2 = prompt('Какой дополнительный тип услуги нужен?');
-let servicePrice2 = Number(prompt('Сколько это будет стоить?'));
+let allServicePrices;
+let fullPrice;
+let servicePercentPrice;
+
+const isNumber = function (num) {
+  return !isNaN(parseFloat(num)) && isFinite(num);
+};
+
+const asking = function () {
+  title = prompt('Как называется ваш проект', 'Сайт визитка');
+  screens = prompt(
+    'Какие типы экранов нужно разработать?',
+    'Простые, Сложные, Интерактивные',
+  );
+
+  do {
+    screenPrice = prompt('Сколько будет стоить данная работа?');
+  } while (
+    screenPrice === null ||
+    screenPrice.trim() === '' ||
+    !isNumber(screenPrice)
+  );
+
+  screenPrice = Number(screenPrice);
+  adaptive =
+    prompt('Нужен ли адаптив на сайте?', 'да').trim().toLowerCase() === 'да';
+};
 
 const getAllServicePrices = function () {
-  return servicePrice1 + servicePrice2;
+  let sum = 0;
+
+  for (let i = 0; i < 2; i++) {
+    if (i === 0) {
+      service1 = prompt('Какой дополнительный тип услуги нужен?');
+    } else if (i === 1) {
+      service2 = prompt('Какой дополнительный тип услуги нужен?');
+    }
+
+    let price;
+
+    do {
+      price = prompt('Сколько это будет стоить?');
+    } while (price === null || price.trim() === '' || !isNumber(price));
+
+    sum += Number(price);
+  }
+
+  return sum;
 };
 
 const getFullPrice = function () {
-  return screenPrice + getAllServicePrices();
+  return screenPrice + allServicePrices;
 };
 
-const getTitle = function (title) {
-  const title = title.trim();
-  return title.charAt(0).toUpperCase() + title.slice(1).toLowerCase();
+const getTitle = function () {
+  return title.trim().charAt(0).toUpperCase() + title.slice(1).toLowerCase();
 };
 
 const getRollBackMessage = function (price) {
@@ -40,13 +81,16 @@ const showTypeOf = function (variable) {
 };
 
 const getServicePercentPrices = function () {
-  return Math.ceil(fullPrice - 28);
+  return Math.ceil(fullPrice - fullPrice * 0.28);
 };
 
-const allServicePrices = getAllServicePrices();
-const fullPrice = getFullPrice();
-const formattedTitle = getTitle(title);
-const servicePercentPrice = getServicePercentPrices();
+asking();
+allServicePrices = getAllServicePrices();
+fullPrice = getFullPrice();
+title = getTitle(title);
+servicePercentPrice = getServicePercentPrices();
+
+console.log('allServicePrices', allServicePrices);
 
 showTypeOf(title);
 showTypeOf(screens);
@@ -58,6 +102,6 @@ console.log(
   'Стоимость с округлением (servicePercentPrice):',
   servicePercentPrice,
 );
-console.log('Название проекта:', formattedTitle);
+console.log('Название проекта:', title);
 console.log(getRollBackMessage(fullPrice));
 console.log('Стоимость за вычетом отката:', getServicePercentPrices());
