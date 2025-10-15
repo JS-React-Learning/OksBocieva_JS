@@ -75,7 +75,7 @@ console.log(stringCheck(12345));
 // Difficult task 4 end
 
 // Difficult task 5 start
-
+/*
 const primeNumbers = function () {
   for (let n = 2; n <= 100; n++) {
     let d;
@@ -93,3 +93,34 @@ const primeNumbers = function () {
 };
 
 primeNumbers();
+*/
+// Difficult task 5 end
+
+// Difficult task 7 start
+
+const week = [
+  'monday',
+  'tuesday',
+  'wednesday',
+  'thursday',
+  'friday',
+  'saturday',
+  'sunday',
+];
+
+const today = new Date();
+const dayIndex = today.getDay();
+const todayIndex = (dayIndex + 6) % 7;
+
+const container = document.querySelector('.week');
+
+week.forEach((day, index) => {
+  const paragraph = document.createElement('p');
+  paragraph.textContent = day;
+
+  paragraph.style.fontWeight = index === todayIndex ? 'bold' : 'normal';
+  paragraph.style.fontStyle =
+    day === 'saturday' || day === 'sunday' ? 'italic' : 'normal';
+
+  container.appendChild(paragraph);
+});
