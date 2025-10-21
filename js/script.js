@@ -8,52 +8,64 @@ const appData = {
   fullPrice: 0,
   servicePercentPrice: 0,
 
-  asking: function () {
-    let title;
-    do {
-      title = prompt('Как называется ваш проект?', 'Сайт визитка');
-    } while (!title || /^\d+$/.test(title.trim()));
-    this.title = title;
+  // asking: function () {
+  //   let title;
+  //   do {
+  //     title = prompt('Как называется ваш проект?', 'Сайт визитка');
+  //   } while (!title || /^\d+$/.test(title.trim()));
+  //   this.title = title;
 
-    this.adaptive =
-      prompt('Нужен ли адаптив на сайте?', 'да').trim().toLowerCase() === 'да';
+  //   this.adaptive =
+  //     prompt('Нужен ли адаптив на сайте?', 'да').trim().toLowerCase() === 'да';
 
-    for (let i = 0; i < 2; i++) {
-      let name;
-      do {
-        name = prompt('Какие типы экранов нужно разработать?');
-      } while (!name || /^\d+$/.test(name.trim()));
+  //   for (let i = 0; i < 2; i++) {
+  //     let name;
+  //     do {
+  //       name = prompt('Какие типы экранов нужно разработать?');
+  //     } while (!name || /^\d+$/.test(name.trim()));
 
-      let price;
-      do {
-        price = prompt('Сколько будет стоить данная работа?');
-      } while (!this.isNumber(price));
+  //     let price;
+  //     do {
+  //       price = prompt('Сколько будет стоить данная работа?');
+  //     } while (!this.isNumber(price));
 
-      this.screens.push({ id: i, name: name, price: Number(price) });
-    }
+  //     this.screens.push({ id: i, name: name, price: Number(price) });
+  //   }
 
-    for (let i = 0; i < 2; i++) {
-      let serviceName;
-      do {
-        serviceName = prompt('Какой дополнительный тип услуги нужен?');
-      } while (!serviceName || /^\d+$/.test(serviceName.trim()));
+  //   for (let i = 0; i < 2; i++) {
+  //     let serviceName;
+  //     do {
+  //       serviceName = prompt('Какой дополнительный тип услуги нужен?');
+  //     } while (!serviceName || /^\d+$/.test(serviceName.trim()));
 
-      let price;
-      do {
-        price = prompt('Сколько это будет стоить?');
-      } while (!this.isNumber(price));
+  //     let price;
+  //     do {
+  //       price = prompt('Сколько это будет стоить?');
+  //     } while (!this.isNumber(price));
 
-      let key = serviceName;
-      let counter = 1;
-      while (this.services.hasOwnProperty(key)) {
-        key = `${serviceName}_${counter}`;
-        counter++;
-      }
+  //     let key = serviceName;
+  //     let counter = 1;
+  //     while (this.services.hasOwnProperty(key)) {
+  //       key = `${serviceName}_${counter}`;
+  //       counter++;
+  //     }
 
-      this.services[key] = Number(price);
-    }
+  //     this.services[key] = Number(price);
+  //   }
+  // },
+
+  getElements: function () {
+  this.heading = document.getElementsByTagName('h1')[0];
+  this.btnHave = document.getElementsByClassName('handler_btn')[0];
+  this.btnReset = document.getElementsByClassName('handler_btn')[1];
+  this.btnPlus = document.querySelector('.screen-btn');
+  this.otherItems = document.querySelectorAll('.other-items.percent');
+  this.otherItems1 = document.querySelectorAll('.other-items.number');
+  this.rangeInput = document.querySelector('.rollback input[type="range"]');
+  this.rangeValue = document.querySelector('.rollback .range-value');
+  this.totalInputs = Array.from(document.getElementsByClassName('total-input'));
+  let screens = document.querySelectorAll('.screen');
   },
-
   addPrices: function () {
     this.screenPrice = this.screens.reduce(
       (sum, screen) => sum + screen.price,
@@ -99,7 +111,8 @@ const appData = {
   },
 
   start: function () {
-    this.asking();
+    this.getElements();
+    // this.asking();
     this.addPrices();
     this.getFullPrice();
     this.getTitle();
