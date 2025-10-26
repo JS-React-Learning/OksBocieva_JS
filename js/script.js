@@ -9,28 +9,6 @@ const appData = {
   servicePercentPrice: 0,
 
   // asking: function () {
-  //   let title;
-  //   do {
-  //     title = prompt('Как называется ваш проект?', 'Сайт визитка');
-  //   } while (!title || /^\d+$/.test(title.trim()));
-  //   this.title = title;
-
-  //   this.adaptive =
-  //     prompt('Нужен ли адаптив на сайте?', 'да').trim().toLowerCase() === 'да';
-
-  //   for (let i = 0; i < 2; i++) {
-  //     let name;
-  //     do {
-  //       name = prompt('Какие типы экранов нужно разработать?');
-  //     } while (!name || /^\d+$/.test(name.trim()));
-
-  //     let price;
-  //     do {
-  //       price = prompt('Сколько будет стоить данная работа?');
-  //     } while (!this.isNumber(price));
-
-  //     this.screens.push({ id: i, name: name, price: Number(price) });
-  //   }
 
   //   for (let i = 0; i < 2; i++) {
   //     let serviceName;
@@ -54,17 +32,28 @@ const appData = {
   //   }
   // },
 
+  init: function () {
+    this.getElements();
+    this.addTitle();
+    this.btnHave.addEventListener('click', this.start);
+    this.btnPlus.addEventListener('click', this.addScreenBlock);
+  },
+  addTitle: function () {
+    document.title = this.heading.textContent;
+  },
   getElements: function () {
-  this.heading = document.getElementsByTagName('h1')[0];
-  this.btnHave = document.getElementsByClassName('handler_btn')[0];
-  this.btnReset = document.getElementsByClassName('handler_btn')[1];
-  this.btnPlus = document.querySelector('.screen-btn');
-  this.otherItems = document.querySelectorAll('.other-items.percent');
-  this.otherItems1 = document.querySelectorAll('.other-items.number');
-  this.rangeInput = document.querySelector('.rollback input[type="range"]');
-  this.rangeValue = document.querySelector('.rollback .range-value');
-  this.totalInputs = Array.from(document.getElementsByClassName('total-input'));
-  let screens = document.querySelectorAll('.screen');
+    this.heading = document.getElementsByTagName('h1')[0];
+    this.btnHave = document.getElementsByClassName('handler_btn')[0];
+    this.btnReset = document.getElementsByClassName('handler_btn')[1];
+    this.btnPlus = document.querySelector('.screen-btn');
+    this.otherItems = document.querySelectorAll('.other-items.percent');
+    this.otherItems1 = document.querySelectorAll('.other-items.number');
+    this.rangeInput = document.querySelector('.rollback input[type="range"]');
+    this.rangeValue = document.querySelector('.rollback .range-value');
+    this.totalInputs = Array.from(
+      document.getElementsByClassName('total-input'),
+    );
+    this.screenElements = document.querySelectorAll('.screen');
   },
   addPrices: function () {
     this.screenPrice = this.screens.reduce(
@@ -78,8 +67,36 @@ const appData = {
     );
   },
 
-  isNumber: function (num) {
-    return !isNaN(parseFloat(num)) && isFinite(num);
+  addScreens: function () {
+    this.screens = [];
+    this.screenElements = document.querySelectorAll('.screen');
+    this.screenElements.forEach((screen, index) => {
+      const select = screen.querySelector('select');
+      const input = screen.querySelector('input');
+      const selectName = select.options[select.selectedIndex].textContent;
+
+      this.screens.push({
+        id: index,
+        name: selectName,
+        price: Number(select.value * input.value),
+      });
+    });
+  },
+
+  addServices: function () {
+    this.otherItems.forEach(function (item) {
+      const check = item.querySelector('input[type=checkbox]');
+      const label = item.querySelector('label');
+      const input = item.querySelector('input[type=text]');
+
+      console.log(check, label, input);
+    });
+  },
+
+  addScreenBlock: function () {
+    this.screenElements = document.querySelectorAll('.screen');
+    const cloneScreen = this.screenElements[0].cloneNode(true);
+    this.screenElements[this.screenElements.length - 1].after(cloneScreen);
   },
 
   getFullPrice: function () {
@@ -111,18 +128,19 @@ const appData = {
   },
 
   start: function () {
-    this.getElements();
-    // this.asking();
-    this.addPrices();
-    this.getFullPrice();
-    this.getTitle();
-    this.getServicePercentPrices();
-
-    console.log('Полная стоимость:', this.fullPrice);
-    console.log('скидка:', this.getRollBackMessage(this.fullPrice));
-    console.log('стоимость с вычетом 28%:', this.servicePercentPrice);
-    console.log('экраны:', this.screens);
+    appData.addScreens();
+    appData.addServices();
+    // this.getElements();
+    // // this.asking();
+    // this.addPrices();
+    // this.getFullPrice();
+    // this.getTitle();
+    // this.getServicePercentPrices();
+    // console.log('Полная стоимость:', this.fullPrice);
+    // console.log('скидка:', this.getRollBackMessage(this.fullPrice));
+    // console.log('стоимость с вычетом 28%:', this.servicePercentPrice);
+    // console.log('экраны:', this.screens);
   },
 };
 
-appData.start();
+appData.init();

@@ -127,67 +127,66 @@ primeNumbers();
 
 // Difficult task 7 end
 
-
 // Difficult task 9 start
-function declension(num, words) {
-  num = Math.abs(num) % 100;
-  const n1 = num % 10;
-  if (num > 10 && num < 20) return words[2];
-  if (n1 > 1 && n1 < 5) return words[1];
-  if (n1 === 1) return words[0];
-  return words[2];
-}
+// function declension(num, words) {
+//   num = Math.abs(num) % 100;
+//   const n1 = num % 10;
+//   if (num > 10 && num < 20) return words[2];
+//   if (n1 > 1 && n1 < 5) return words[1];
+//   if (n1 === 1) return words[0];
+//   return words[2];
+// }
 
-function addZero(num) {
-  return num < 10 ? '0' + num : num;
-}
+// function addZero(num) {
+//   return num < 10 ? '0' + num : num;
+// }
 
-function updateDateTime() {
-  const now = new Date();
+// function updateDateTime() {
+//   const now = new Date();
 
-  const daysOfWeek = [
-    'Воскресенье',
-    'Понедельник',
-    'Вторник',
-    'Среда',
-    'Четверг',
-    'Пятница',
-    'Суббота',
-  ];
+//   const daysOfWeek = [
+//     'Воскресенье',
+//     'Понедельник',
+//     'Вторник',
+//     'Среда',
+//     'Четверг',
+//     'Пятница',
+//     'Суббота',
+//   ];
 
-  const months = [
-    'января',
-    'февраля',
-    'марта',
-    'апреля',
-    'мая',
-    'июня',
-    'июля',
-    'августа',
-    'сентября',
-    'октября',
-    'ноября',
-    'декабря',
-  ];
+//   const months = [
+//     'января',
+//     'февраля',
+//     'марта',
+//     'апреля',
+//     'мая',
+//     'июня',
+//     'июля',
+//     'августа',
+//     'сентября',
+//     'октября',
+//     'ноября',
+//     'декабря',
+//   ];
 
-  const dayName = daysOfWeek[now.getDay()];
-  const day = now.getDate();
-  const month = months[now.getMonth()];
-  const year = now.getFullYear();
+//   const dayName = daysOfWeek[now.getDay()];
+//   const day = now.getDate();
+//   const month = months[now.getMonth()];
+//   const year = now.getFullYear();
 
-  const hours = now.getHours();
-  const minutes = now.getMinutes();
-  const seconds = now.getSeconds();
+//   const hours = now.getHours();
+//   const minutes = now.getMinutes();
+//   const seconds = now.getSeconds();
 
-  const formatA = `Сегодня ${dayName}, ${day} ${month} ${year} года, ${hours} ${declension(hours, ['час', 'часа', 'часов'])} ${minutes} ${declension(minutes, ['минута', 'минуты', 'минут'])} ${seconds} ${declension(seconds, ['секунда', 'секунды', 'секунд'])}`;
+//   const formatA = `Сегодня ${dayName}, ${day} ${month} ${year} года, ${hours} ${declension(hours, ['час', 'часа', 'часов'])} ${minutes} ${declension(minutes, ['минута', 'минуты', 'минут'])} ${seconds} ${declension(seconds, ['секунда', 'секунды', 'секунд'])}`;
 
-  const formatB = `${addZero(day)}.${addZero(now.getMonth() + 1)}.${year} - ${addZero(hours)}:${addZero(minutes)}:${addZero(seconds)}`;
+//   const formatB = `${addZero(day)}.${addZero(now.getMonth() + 1)}.${year} - ${addZero(hours)}:${addZero(minutes)}:${addZero(seconds)}`;
 
-  document.getElementById('formatA').textContent = formatA;
-  document.getElementById('formatB').textContent = formatB;
-}
+//   document.getElementById('formatA').textContent = formatA;
+//   document.getElementById('formatB').textContent = formatB;
+// }
 
-updateDateTime();
-setInterval(updateDateTime, 1000);
+// updateDateTime();
+// setInterval(updateDateTime, 1000);
 
 // Difficult task 9 end
