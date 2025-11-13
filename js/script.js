@@ -228,6 +228,7 @@ const appData = {
     this.cmsBlock.querySelector('.main-controls__input').style.display = 'none';
     this.cmsInput.disabled = false;
     this.selectCms.disabled = false;
+    this.cmsCheck.disabled = false;
 
     this.totalInputs.forEach((input) => (input.value = 0));
     this.btnHave.style.display = 'inline-block';
