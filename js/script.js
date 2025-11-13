@@ -18,13 +18,32 @@ const appData = {
     this.getRollBackValue();
     this.btnHave.addEventListener('click', () => {
       this.addScreens();
+
       if (this.invalidScreen()) {
         alert('Заполните все типы экранов и их количество');
         return;
       }
+
       this.start();
+
+      this.screenElements.forEach((screen) => {
+        screen.querySelector('input[type=text]').disabled = true;
+        screen.querySelector('select').disabled = true;
+      });
+
+      [...this.otherItemsPercent, ...this.otherItemsNumber].forEach((item) => {
+        const input = item.querySelector('input[type=text]');
+        input.disabled = true;
+      });
+
+      this.btnHave.style.display = 'none';
+      this.btnReset.style.display = 'inline-block';
     });
+
     this.btnPlus.addEventListener('click', this.addScreenBlock);
+    this.btnReset.addEventListener('click', () => {
+      this.reset();
+    });
   },
 
   addTitle: function () {
@@ -149,6 +168,29 @@ const appData = {
     this.showResult();
     this.invalidScreen();
     console.log(appData);
+  },
+  reset: function () {
+    this.screenElements.forEach((screen) => {
+      const input = screen.querySelector('input[type=text]');
+      const select = screen.querySelector('select');
+      input.disabled = false;
+      input.value = '';
+      select.disabled = false;
+      select.selectedIndex = 0;
+    });
+
+    [...this.otherItemsPercent, ...this.otherItemsNumber].forEach((item) => {
+      const check = item.querySelector('input[type=checkbox]');
+      check.checked = false;
+    });
+
+    this.screenElements.forEach((screen, index) => {
+      if (index > 0) screen.remove();
+    });
+
+    this.totalInputs.forEach((input) => (input.value = 0));
+    this.btnHave.style.display = 'inline-block';
+    this.btnReset.style.display = 'none';
   },
 };
 
