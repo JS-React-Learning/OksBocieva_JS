@@ -16,6 +16,8 @@ const appData = {
     this.getElements();
     this.addTitle();
     this.getRollBackValue();
+    this.handleCmsCheckbox();
+
     this.btnHave.addEventListener('click', () => {
       this.addScreens();
 
@@ -35,6 +37,10 @@ const appData = {
         const input = item.querySelector('input[type=text]');
         input.disabled = true;
       });
+
+      this.cmsCheck.disabled = true;
+      if (this.cmsInput) this.cmsInput.disabled = true;
+      this.selectCms.disabled = true;
 
       this.btnHave.style.display = 'none';
       this.btnReset.style.display = 'inline-block';
@@ -65,7 +71,22 @@ const appData = {
     );
 
     this.screenElements = document.querySelectorAll('.screen');
+    this.cmsCheck = document.querySelector('.cms input[type="checkbox"]');
+    this.cmsBlock = document.querySelector('.hidden-cms-variants');
+    this.cmsInput = document.querySelector('#cms-other-input');
+    this.selectCms = document.querySelector('#cms-select');
   },
+  handleCmsCheckbox: function () {
+    this.cmsCheck.addEventListener('change', () => {
+      this.cmsBlock.style.display = this.cmsCheck.checked ? 'flex' : 'none';
+    });
+
+    this.selectCms.addEventListener('change', () => {
+      const input = this.cmsBlock.querySelector('.main-controls__input');
+      input.style.display = this.selectCms.value === 'other' ? 'block' : 'none';
+    });
+  },
+
   addPrices: function () {
     this.screenPrice = this.screens.reduce((acc, el) => acc + el.price, 0);
 
@@ -92,6 +113,18 @@ const appData = {
       (acc, screen) => acc + screen.count,
       0,
     );
+
+    if (this.cmsCheck.checked) {
+      const cmsSelect = this.cmsBlock.querySelector('#cms-select');
+      const cmsOtherInput = this.cmsBlock.querySelector('#cms-other-input');
+
+      this.fullPrice +=
+        cmsSelect.value === '50'
+          ? this.fullPrice * 0.5
+          : cmsSelect.value === 'other'
+          ? this.fullPrice * (Number(cmsOtherInput.value) / 100)
+          : 0;
+    }
   },
   addScreens: function () {
     this.screens = [];
@@ -187,6 +220,14 @@ const appData = {
     this.screenElements.forEach((screen, index) => {
       if (index > 0) screen.remove();
     });
+
+    this.cmsCheck.checked = false;
+    this.cmsBlock.style.display = 'none';
+    this.cmsBlock.querySelector('#cms-select').selectedIndex = 0;
+    this.cmsInput.value = '';
+    this.cmsBlock.querySelector('.main-controls__input').style.display = 'none';
+    this.cmsInput.disabled = false;
+    this.selectCms.disabled = false;
 
     this.totalInputs.forEach((input) => (input.value = 0));
     this.btnHave.style.display = 'inline-block';
